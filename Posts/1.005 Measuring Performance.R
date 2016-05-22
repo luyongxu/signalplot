@@ -37,3 +37,5 @@ combined <- bind_rows(CMG, SPY)
   theme_alphaplot())
 ggsave(file = "./Posts/Plots/1.005 Equity Curve.png", plot = p1, dpi = 300, width = 8, height = 5)
 
+asdf
+

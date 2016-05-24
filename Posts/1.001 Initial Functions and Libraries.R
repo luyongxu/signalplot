@@ -8,6 +8,7 @@ library(reshape2)
 library(scales)
 library(gridExtra)
 library(readxl)
+library(TTR)
 
 # Set working directory
 setwd("C:/Users/Coke/Desktop/Projects/AlphaPlot/")
@@ -15,7 +16,7 @@ setwd("C:/Users/Coke/Desktop/Projects/AlphaPlot/")
 # Quandl authentication key.
 Quandl.api_key("QEayyyTZLrL2TftSWDM8")
 
-# Load functions.
+# ggplot2 theme.
 theme_alphaplot <- function(base_size = 11, base_family = "") {
   half_line <- base_size / 2
   theme(
@@ -76,24 +77,13 @@ theme_alphaplot <- function(base_size = 11, base_family = "") {
   )
 }
 
-lay_out = function(...) {    
-  x <- list(...)
-  n <- max(sapply(x, function(x) max(x[[2]])))
-  p <- max(sapply(x, function(x) max(x[[3]])))
-  grid::pushViewport(grid::viewport(layout = grid::grid.layout(n, p)))    
-  
-  for (i in seq_len(length(x))) {
-    print(x[[i]][[1]], vp = grid::viewport(layout.pos.row = x[[i]][[2]], 
-                                           layout.pos.col = x[[i]][[3]]))
-  }
-} 
-
+# query yahoo data from quantmod.
 getSymbolsYahoo <- function(ticker) { 
   df <- getSymbols(ticker, src = "yahoo", auto.assign = FALSE, from = "1900-01-01")
   df <- as.data.frame(df) %>% 
-    mutate(Date = index((df)), 
-           Ticker = ticker)
-  colnames(df) <- c("Open", "High", "Low", "Close", "Volume", "Adjusted_Close", "Date", "Ticker")
+    mutate(date = index((df)), 
+           ticker = ticker)
+  colnames(df) <- c("open", "high", "low", "close", "volume", "adjusted_close", "date", "ticker")
   return(df)
 }
 

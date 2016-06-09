@@ -216,3 +216,8 @@ combined <- bind_rows(data.frame(date = SPY_test$date, creturn = SPY_test$SPY_cr
   scale_y_continuous(labels = percent) + 
   theme_alphaplot(base_size = 10))
 ggsave(file = "./Plots/1.006 Equity Curve.png", plot = p11, dpi = 300, width = 8, height = 5)
+(p12 <- ggplot(SPY_test, aes(x = date, y = adjusted_close)) + geom_line(aes(colour = m03_signal)) + 
+  labs(title = "SPY Closing Price With Trading Signal", y = "Adjusted Close", x = "Date") + 
+  theme_alphaplot(base_size = 10))
+ggsave(file = "./Plots/1.006 Trading Signal.png", plot = p12, dpi = 300, width = 8, height = 5)
+                                                                          

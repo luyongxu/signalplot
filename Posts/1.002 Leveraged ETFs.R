@@ -1,6 +1,6 @@
 source("./Posts/1.001 Initial Functions and Libraries.R")
 
-# Query data
+# 1. Query data
 SPY <- getSymbolsYahoo("SPY")
 SPXL <- getSymbolsYahoo("SPXL")
 SPXS <- getSymbolsYahoo("SPXS")
@@ -8,7 +8,7 @@ GDX <- getSymbolsYahoo("GDX")
 NUGT <- getSymbolsYahoo("NUGT")
 DUST <- getSymbolsYahoo("DUST")
 
-# Prepare data for plotting. 
+# 2. Prepare data for plotting. 
 df1 <- bind_rows(SPY, SPXL) %>% 
   filter(date >= "2015-01-01") %>% 
   arrange(ticker, date) %>% 
@@ -33,7 +33,7 @@ df5 <- bind_rows(NUGT, DUST) %>%
   group_by(ticker) %>% 
   mutate(indexed_close = adjusted_close / adjusted_close[1])
 
-# Simulate volatility. 
+# 3. Simulate volatility. 
 outcome_master <- c()
 for (i in 1:10000) { 
   temp <- data.frame(row_number = 1:1000)
@@ -44,7 +44,7 @@ for (i in 1:10000) {
 }
 outcome_master <- as.data.frame(outcome_master)
 
-# Plots.
+# 4. Plots.
 (p1 <- ggplot(df1, aes(x = date, y = indexed_close)) + 
   geom_line(aes(colour = ticker), size = 1) + 
   labs(title = "SPY and SPXL Indexed To January 2015", y = "Indexed Closing Price", x = "Date") + 

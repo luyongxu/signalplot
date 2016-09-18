@@ -2,16 +2,21 @@
 library(IBrokers)
 library(Quandl)
 library(quantmod)
-library(dplyr)
-library(ggplot2)
-library(reshape2)
 library(scales)
 library(gridExtra)
-library(readxl)
 library(TTR)
+library(jsonlite)
+
+# Load Hadley libraries. 
+library(dplyr)
+library(ggplot2)
+library(stringr)
+library(readr)
+library(httr)
+library(readxl)
 
 # Set working directory
-setwd("C:/Users/Coke/Desktop/Projects/AlphaPlot/")
+setwd("C:/Users/Coke/Desktop/Projects/SignalPlot/")
 
 # Quandl authentication key.
 Quandl.api_key("QEayyyTZLrL2TftSWDM8")
@@ -38,7 +43,7 @@ theme_alphaplot <- function(base_size = 11, base_family = "") {
                                       margin = margin(r = 0.8 * half_line, l = 0.8 * half_line / 2)),
     
     legend.background =  element_rect(fill = "#F0F0F0", colour = NA),
-    legend.margin =      unit(0.2, "cm"),
+    legend.spacing =      unit(0.2, "cm"),
     legend.key =         element_rect(fill = "#F0F0F0", colour = "#F0F0F0"),
     legend.key.size =    unit(1.2, "lines"),
     legend.key.height =  NULL,
@@ -56,9 +61,7 @@ theme_alphaplot <- function(base_size = 11, base_family = "") {
     panel.border =       element_rect(fill = NA, colour = "#F0F0F0"), 
     panel.grid.major =   element_line(colour = "#D0D0D0", size = 0.60),
     panel.grid.minor =   element_line(colour = "#D0D0D0", size = 0.60),
-    panel.margin =       unit(half_line, "pt"),
-    panel.margin.x =     NULL,
-    panel.margin.y =     NULL,
+    panel.spacing =       unit(half_line, "pt"),
     panel.ontop    =     FALSE,
     
     strip.background =   element_rect(fill = "grey85", colour = NA),

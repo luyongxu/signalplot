@@ -309,10 +309,5 @@ knn_predict(m47, "m47")
 knn_predict(m48, "m48")
 knn_predict(m49, "m49")
 
-# Ensemble. 
-# m38 <- m37 %>% 
-#   rename(probability_m37 = probability) %>% 
-#   mutate(probability_m01 = predict(m01, tournament)) %>% 
-#   mutate(probability = 0.5*probability_m01 + 0.5*probability_m37) %>% 
-#   select(-probability_m01, -probability_m37)
+
 

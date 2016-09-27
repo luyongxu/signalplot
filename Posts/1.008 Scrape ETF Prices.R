@@ -2,7 +2,6 @@ source("./Posts/1.001 Initial Functions and Libraries.R")
 
 # 1. www.etf.com API is in JSON format. The 0 refers to begin at the 0th element. 
 # The 2000 represents number of elements to retrieve. Not sure what the 1 means. 
-# Removed some ETFs because the Yahoo API was giving me errors. Not enough trading history. 
 url <- GET("http://www.etf.com/etf-finder-funds-api//-aum/0/2000/1")
 etf <- fromJSON(content(url, as = "text"), flatten = TRUE) %>% 
   mutate(fundBasics.issuer = str_replace_all(fundBasics.issuer, "(\\<.*\\>)(.*)(\\<.*\\>)", "\\2"), 

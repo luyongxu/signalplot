@@ -6,6 +6,7 @@ library(scales)
 library(gridExtra)
 library(TTR)
 library(jsonlite)
+library(xtable)
 
 # Load Hadley libraries. 
 library(dplyr)

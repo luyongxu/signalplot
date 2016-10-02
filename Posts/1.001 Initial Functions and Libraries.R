@@ -15,6 +15,7 @@ library(stringr)
 library(readr)
 library(httr)
 library(readxl)
+library(lubridate)
 
 # Set working directory
 setwd("C:/Users/Coke/Desktop/Projects/SignalPlot/")
@@ -81,13 +82,31 @@ theme_alphaplot <- function(base_size = 11, base_family = "") {
   )
 }
 
-# query yahoo data from quantmod.
+# Wrapper function for quantmod's getSymbols. 
 getSymbolsYahoo <- function(ticker) { 
   df <- getSymbols(ticker, src = "yahoo", auto.assign = FALSE, from = "1900-01-01")
   df <- as.data.frame(df) %>% 
     mutate(date = index((df)), 
            ticker = ticker)
   colnames(df) <- c("open", "high", "low", "close", "volume", "adjusted_close", "date", "ticker")
+  return(df)
+}
+
+# Get multiple tickers at once. 
+getSymbolsYahooMany <- function(ticker_list) {
+  df <- data.frame()
+  n <- 1
+  for (ticker in ticker_list) {
+    print(paste0("Ticker number ", n, ": ", ticker))
+    df_temp <- tryCatch(getSymbolsYahoo(ticker), 
+                        error = function(e) {
+                          print(paste0("Could not download data for ", ticker))
+                          return(data.frame())
+                        })
+    df <- bind_rows(df, df_temp)
+    n <- n + 1
+    # Sys.sleep(runif(1, 1, 2))
+  }
   return(df)
 }
 

@@ -31,7 +31,6 @@ aum_table <- xtable(aum)
 align(aum_table) <- "l|l|l|r|r|r|r|"
 print(aum_table, type = "html")
 
-
 # 3. Plots
 (p1 <- ggplot(etf, aes(x = analysis.efficiencyScore, y = analysis.tradabilityScore)) + 
   geom_point(alpha = 1/2, aes(colour = classification.assetClass)) + 
@@ -44,5 +43,3 @@ print(aum_table, type = "html")
   theme_alphaplot())
 ggsave(file = "./Plots/1.010 Optimal ETFs Scatter.png", plot = p1, dpi = 300, width = 8, height = 5)
  
-df <- data.frame()
-ggplot(df) + geom_point() + xlim(0, 10) + ylim(0, 10) + theme_alphaplot()

@@ -234,4 +234,30 @@ gglinePlot <- function(dataVar, xData, yData) {
   geom_point(data = revenue, aes(x = Date, y = CompOutlookAvg)))
 
 
+source("./Posts/1.001 Initial Functions and Libraries.R")
+
+# 1. Query data.
+CMG <- getSymbolsYahoo("CMG")
+
+# 2. Calculate returns.
+CMG <- CMG %>% 
+  arrange(date) %>% 
+  mutate(d1_return = adjusted_close / lag(adjusted_close, 1) - 1, 
+         m1_return = adjusted_close / lag(adjusted_close, 21) - 1, 
+         m3_return = adjusted_close / lag(adjusted_close, 63) - 1, 
+         m6_return = adjusted_close / lag(adjusted_close, 126) - 1, 
+         m12_return = adjusted_close / lag(adjusted_close, 252) - 1) %>% 
+  mutate(m1_return_smoothed = (log(adjusted_close) - SMA(log(adjusted_close), n = 32)) * (12/(1/21)) / ((32 - 1) / 2), 
+         m3_return_smoothed = (log(adjusted_close) - SMA(log(adjusted_close), n = 95)) * (12/(1/21)) / ((95 - 1) / 2), 
+         m6_return_smoothed = (log(adjusted_close) - SMA(log(adjusted_close), n = 189)) * (12/(1/21)) / ((189 - 1) / 2), 
+         m12_return_smoothed = (log(adjusted_close) - SMA(log(adjusted_close), n = 378)) * (12/(1/21)) / ((378 - 1) / 2))
+
+ggplot(CMG, aes(x = d1_return)) + geom_histogram(binwidth = 0.001)
+ggplot(CMG, aes(x = date, y = m12_return)) + geom_line() + geom_line(aes(y = m12_return_smoothed), colour = "red")
+ggplot(CMG, aes(x = date, y = m6_return)) + geom_line() + geom_line(aes(y = m6_return_smoothed), colour = "red")
+ggplot(CMG, aes(x = date, y = m3_return)) + geom_line() + geom_line(aes(y = m3_return_smoothed), colour = "red")
+
+
+ggplot(CMG, aes(x = date, y = m6_return)) + geom_line()
+ggplot(CMG, aes(x = date, y = m12_return)) + geom_line()
 

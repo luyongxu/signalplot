@@ -1,4 +1,4 @@
-source("./Posts/1.001 Initial Functions and Libraries.R")
+source("./Code/1.001 Initial Functions and Libraries.R")
 
 # 1. www.etf.com API is in JSON format. The 0 refers to begin at the 0th element. 
 # The 2000 represents number of elements to retrieve. Not sure what the 1 means. 

@@ -1,4 +1,4 @@
-source("./Posts/1.001 Initial Functions and Libraries.R")
+source("./Code/1.001 Initial Functions and Libraries.R")
 library(MASS)
 
 # 1. Query data. 

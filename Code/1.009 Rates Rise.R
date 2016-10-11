@@ -1,4 +1,4 @@
-source("./Posts/1.001 Initial Functions and Libraries.R")
+source("./Code/1.001 Initial Functions and Libraries.R")
 
 # 1. Download 10 year.
 us10yr <- Quandl("FRED/DGS10") %>% 

@@ -16,11 +16,13 @@ library(readr)
 library(httr)
 library(readxl)
 library(lubridate)
+library(reshape2)
+library(tidyverse)
 
 # Set working directory
-setwd("C:/Users/Coke/Desktop/Projects/SignalPlot/")
+setwd("C:/Users/luyon/Desktop/Projects/SignalPlot")
 
-# Quandl authentication key.
+# Quandl authentication key. Please don't use my key. 
 Quandl.api_key("QEayyyTZLrL2TftSWDM8")
 
 # ggplot2 theme.

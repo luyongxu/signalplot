@@ -1,4 +1,4 @@
-source("./Posts/1.001 Initial Functions and Libraries.R")
+source("./Code/1.001 Initial Functions and Libraries.R")
 
 # 1. Query data.
 sp500 <- read_csv("./Raw Data/S&P 500 Changes/S&P 500 Changes.csv") %>% 

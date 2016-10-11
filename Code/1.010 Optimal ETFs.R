@@ -1,4 +1,4 @@
-source("./Posts/1.001 Initial Functions and Libraries.R")
+source("./Code/1.001 Initial Functions and Libraries.R")
 
 # 1. Load data. 
 etf <- read_csv("./Output/ETFs/ETF Metadata.csv")

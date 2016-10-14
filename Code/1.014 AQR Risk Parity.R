@@ -1,8 +1,7 @@
 source("./Code/1.001 Initial Functions and Libraries.R")
 
 # 1. Load data. 
-data_raw <- getSymbolsYahooMany(c("AQRNX", "TLO", "SCHP", "SPY", "GLD", "EFA", "VWO", "EMB", "GSG", 
-                                  "LQD", "HYG"))
+data_raw <- getSymbolsYahooMany(c("AQRNX", "TLO", "SCHP", "SPY", "GLD", "EFA", "VWO", "EMB", "GSG"))
 
 # 2. Calculate daily returns
 data <- data_raw %>% 
@@ -13,6 +12,8 @@ data <- data_raw %>%
 
 # 3. Train model. 
 m01 <- lm(AQRNX ~ 0 + GLD + SCHP + SPY + TLO + EFA + VWO + EMB + GSG, data = data)
+m02 <- lm(AQRNX ~ 0 + GLD + SCHP + SPY + TLO + EFA + VWO + EMB + GSG, data = data %>% filter(date <= "2013-01-01"))
+m03 <- lm(AQRNX ~ 0 + GLD + SCHP + SPY + TLO + EFA + VWO + EMB + GSG, data = data %>% filter(date >= "2013-01-01"))         
 summary(m01)
 sum(coef(m01))
 
@@ -40,3 +41,5 @@ ggsave(file = "./Plots/1.014 AQR Risk Parity.png", plot = p1, dpi = 300, width =
 holdings <- read_csv("./Raw Data/Risk Parity/AQR Risk Parity Fund Holdings.csv") %>% 
   select(c(1, 2, 5))
 print(xtable(holdings), type = "html")
+
+

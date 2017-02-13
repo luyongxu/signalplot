@@ -211,13 +211,19 @@ SPY_test <- SPY_test %>%
 combined <- bind_rows(data.frame(date = SPY_test$date, creturn = SPY_test$SPY_creturn, ticker = "SPY"), 
                       data.frame(date = SPY_test$date, creturn = SPY_test$m03_creturn, ticker = "m03_long"))
 (p11 <- ggplot(combined, aes(x = date, y = creturn)) + geom_line(aes(colour = ticker), size = 1) + 
-  labs(title = "Cumulative Return of SPY Versus Model m03", y = "Cumulative Return", x = "Date") + 
+  labs(title = "Cumulative Return of SPY Versus Model m03", 
+       subtitle = "The modified strategy outperforms SPY over this time period.", 
+       y = "Cumulative Return", 
+       x = "Date") + 
   geom_hline(yintercept = 0) + 
   scale_y_continuous(labels = percent) + 
   theme_alphaplot(base_size = 10))
 ggsave(file = "./Plots/1.006 Equity Curve.png", plot = p11, dpi = 300, width = 8, height = 5)
 (p12 <- ggplot(SPY_test, aes(x = date, y = adjusted_close)) + geom_line(aes(colour = m03_signal)) + 
-  labs(title = "SPY Closing Price With Trading Signal", y = "Adjusted Close", x = "Date") + 
+  labs(title = "SPY Closing Price With Trading Signal", 
+       subtitle = "The modified strategy outperforms SPY over this time period.", 
+       y = "Adjusted Close", 
+       x = "Date") + 
   theme_alphaplot(base_size = 10))
 ggsave(file = "./Plots/1.006 Trading Signal.png", plot = p12, dpi = 300, width = 8, height = 5)
                                                                           

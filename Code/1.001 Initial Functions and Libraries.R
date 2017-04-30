@@ -1,7 +1,5 @@
 # 1. Load libraries.
-library(IBrokers)
 library(Quandl)
-library(quantmod)
 library(scales)
 library(gridExtra)
 library(TTR)
@@ -11,15 +9,11 @@ library(gtable)
 library(grid)
 
 # 2. Load Hadley libraries. 
-library(dplyr)
-library(ggplot2)
-library(stringr)
-library(readr)
+library(tidyverse)
 library(httr)
 library(readxl)
 library(lubridate)
 library(reshape2)
-library(tidyverse)
 
 # 3. Set working directory
 setwd("C:/Users/luyon/Desktop/Projects/SignalPlot")

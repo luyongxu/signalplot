@@ -32,7 +32,7 @@ plot_bitcoin2 <- function(y, title) {
   p <- ggplot(bitcoin_price, aes_string(x = "date", y = y)) + 
     geom_line(colour = "red") + 
     geom_hline(yintercept = 0) + 
-    coord_cartesian(ylim = c(-0.5, 1)) + 
+    coord_cartesian(ylim = c(-0.5, 2.0)) +
     labs(title = title,  x = "") + 
     theme(axis.title.x = element_blank(), 
           axis.title.y = element_blank())
@@ -58,7 +58,7 @@ gridExtra::grid.arrange(plot_bitcoin("close", "Bitcoin Close"),
 plot_bitcoin3 <- function(y, title) { 
   p <- ggplot(bitcoin_combined, aes_string(x = "date")) + 
     geom_line(aes_string(y = y), colour = "blue") + 
-    geom_line(aes_string(y = paste("ema", y, sep = ".")), colour = "red") + 
+    geom_line(aes_string(y = str_c("ema", y, sep = ".")), colour = "red") + 
     labs(title = title) + 
     theme(axis.title.x = element_blank(), 
           axis.title.y = element_blank())
@@ -88,9 +88,10 @@ plot_bitcoin3("BCHAIN.MIREV", "Bitcoin Miners Revenue")
 #' # Plot Bitcoin Data One Month Change
 plot_bitcoin4 <- function(y, title) { 
   p <- ggplot(bitcoin_combined, aes_string(x = "date")) + 
-    geom_line(aes_string(y = paste("change01", y, sep = ".")), colour = "blue") + 
+    geom_line(aes_string(y = str_c("change01", y, sep = ".")), colour = "blue") + 
+    geom_hline(yintercept = 0) + 
     coord_cartesian(ylim = c(-0.5, 2)) + 
-    labs(title = title) + 
+    labs(title = str_c(title, " 1 Month Change")) + 
     theme(axis.title.x = element_blank(), 
           axis.title.y = element_blank())
   return(p)

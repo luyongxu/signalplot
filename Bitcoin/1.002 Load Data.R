@@ -24,7 +24,7 @@ quandl_tidy <- function(code, name) {
   return(df)
 }
 
-#' # Bitcoin Exchange Rate  
+#' # Bitcoin Exchange Rate Data
 print("Downloading bitcoin exchange rate data.")
 bitcoin_price <- Quandl("BCHARTS/BITSTAMPUSD") %>% 
   arrange(Date) %>% 
@@ -62,7 +62,7 @@ for (i in seq_along(code_list)) {
 }
 
 #' # Google Trends
-bitcoin_trend <- gtrendsR::gtrends(keyword = "bitcoin", time = "today 3-m")[["interest_over_time"]] %>% 
+bitcoin_trend <- gtrendsR::gtrends(keyword = "bitcoin", time = "today+5-y")[["interest_over_time"]] %>% 
   select(date, hits) %>% 
   mutate(date = as.Date(date)) %>% 
   as_tibble()

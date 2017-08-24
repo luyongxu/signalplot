@@ -21,7 +21,7 @@ library(RcppRoll)
 Quandl.api_key("EbaoLxynTBPZx9bjNAwC")
 
 #' # 3. ggplot2 Theme
-theme_alphaplot <- function(base_size = 11, base_family = "") {
+theme_signalplot <- function(base_size = 11, base_family = "") {
   half_line <- base_size / 2
   theme(line = element_line(colour = "black", size = 0.5, linetype = 1, lineend = "butt"), 
         rect = element_rect(fill = "white", colour = "black", size = 0.5, linetype = 1), 

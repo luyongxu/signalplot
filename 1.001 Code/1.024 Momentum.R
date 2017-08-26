@@ -1,5 +1,5 @@
 #' ---
-#' title: "Bitcoin Price Response to Macroeconomic and Geopolitical Events"
+#' title: "Momentum"
 #' author: "Kevin Lu"
 #' output: 
 #'   html_document: 
@@ -19,15 +19,21 @@ train <- spy %>%
   select(date, adjusted_close) %>% 
   mutate(close_return_01d = adjusted_close / lag(adjusted_close, 1) - 1, 
          close_return_12m = adjusted_close / lag(adjusted_close, 252) - 1, 
-         signal = ifelse(close_return_12m > 0, 1, -1))
+         signal = ifelse(lag(close_return_12m, 1) > 0.00, 1, 0))
 
 #' # 4. Calculate returns
 train <- train %>% 
-  filter(date >= "1994-01-27") %>% 
+  filter(!is.na(signal)) %>% 
   mutate(return_buyhold = cumprod(1 + close_return_01d) - 1, 
          return_momentum = cumprod(1 + close_return_01d * signal) - 1)
-  
-#' # 4. Plot
+
+#' # 5. Results
+tail(train)
+
+mean(train[["close_return_01d"]]) / sd(train[["close_return_01d"]]) * 252^0.5
+mean(train[["close_return_01d"]] * train[["signal"]]) / sd(train[["close_return_01d"]] * train[["signal"]]) * 252^0.5
+ 
+#' # 6. Plot
 (p1 <- ggplot(train, aes(x = date, y = adjusted_close, colour = signal)) + 
     geom_line() +  
     labs(title = "S&P 500 Index (SPY) With Momentum Trading Signal", 
@@ -35,16 +41,16 @@ train <- train %>%
          y = "Price", 
          x = "Date") + 
     theme_signalplot())
-ggsave(file = "./Plots/1.024 SPY With Momentum Trading Strategy.png", plot = p1, dpi = 300, width = 8, height = 5)
+ggsave(file = "./Plots/1.024 SPY With Momentum Trading Strategy B.png", plot = p1, dpi = 300, width = 8, height = 5)
 
 (p2 <- ggplot(train, aes(x = date)) + 
     geom_line(aes(y = return_buyhold), colour = "blue") + 
     geom_line(aes(y = return_momentum), colour = "red") + 
-    annotate("text", x = as.Date("2009-01-01"), y = 12, label = "Momentum Strategy", colour = "red") + 
-    annotate("text", x = as.Date("2009-01-01"), y = 0, label = "SPY Buy-and-Hold Return", colour = "blue") + 
+    annotate("text", x = as.Date("2009-01-01"), y = 5.5, label = "Momentum Strategy \n Sharpe Ratio: 0.77", colour = "red") + 
+    annotate("text", x = as.Date("2009-01-01"), y = 0.4, label = "SPY Buy-and-Hold Return \n Sharpe Ratio: 0.56", colour = "blue") + 
     labs(title = "Equity Curve of Momentum Strategy vs SPY Return", 
-         subtitle = "A simple momentum strategy (16% annualized return) vastly outperforms the S&P 500 (9% annualized return).", 
+         subtitle = "A simple momentum strategy outperforms the S&P 500.", 
          y = "Return", 
          x = "Date") + 
     theme_signalplot())
-ggsave(file = "./Plots/1.024 Momentum Trading Strategy Equity Curve.png", plot = p2, dpi = 300, width = 8, height = 5)
+ggsave(file = "./Plots/1.024 Momentum Trading Strategy Equity Curve B.png", plot = p2, dpi = 300, width = 8, height = 5)
